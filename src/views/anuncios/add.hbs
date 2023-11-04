@@ -1,0 +1,37 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h2>NUEVA CLASE</h2>
+                    <form action="/anuncios/add" method="POST">
+                        <div class="form-group">
+                            <select class="custom-select form-select form-select-sm" name="actividad_ofrecida_id"
+                                id="actividad_ofrecida_id" aria-label=".form-select-sm example" required>
+                                <option value=""> Selecciona</option>
+                                {{#each actividades}}
+                                <option value="{{this.actividad_id}}"> {{this.nombre}} </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group"><input class="form-control" type="datetime-local" name="datetimelocal"
+                                placeholder="datetimelocal" required /> </div>
+
+                        <div class="form-group">
+                            <input class="form-control" type="number" name="duracion" placeholder="duracion en minutos"
+                                value="60" required />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="number" name="salario_propuesto" placeholder="precio"
+                                step="0.05" min="0" max="500" value="18" required />
+                        </div>
+
+                        <button class="btn btn-success btn-block">Guardar</button>
+
+                        <a class="btn btn-warning btn-block" href="javascript:void(0)"
+                            onclick="history.back();">Volver</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

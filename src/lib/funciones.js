@@ -1,24 +1,23 @@
-const bcrypt = require('bcryptjs');
-const path = require('path');
-const fs = require('fs');
-const db = require("../database");
-const mysqldump = require('mysqldump');
-const { promisify } = require('util');
-const { stringify } = require('querystring');
-const mysql = require('mysql');
-var readline = require('readline');
+import bcrypt from 'bcryptjs';
+import { join } from 'path';
+import { statSync, readdir } from 'fs';
+import mysqldump from 'mysqldump';
+import { stringify } from 'querystring';
+import { promisify } from 'util';
+import db from "../database.js";
+
 const helpers = {};
 
 function createdDate(file) {
-    const { birthtime } = fs.statSync(file)
+    const { birthtime } = statSync(file)
     return birthtime
 }
 
 helpers.listadoFotos = (req, res, next) => {
     const nif = req;
     var fotitos = [];
-    var directorio = path.join(__dirname, "../public/img/imagenes", nif);
-    fs.readdir(directorio, (err, files) => {
+    var directorio = join(__dirname, "../public/img/imagenes", nif);
+    readdir(directorio, (err, files) => {
         if (files) {
             files.forEach(file => {
                 fotitos.push(file);
@@ -30,8 +29,8 @@ helpers.listadoFotos = (req, res, next) => {
 
 helpers.listadoBackups = (req, res, next) => {
     var documentos = [];
-    var directorio = path.join(__dirname, "../public/dumpSQL");
-    fs.readdir(directorio, (err, files) => {
+    var directorio = join(__dirname, "../public/dumpSQL");
+    readdir(directorio, (err, files) => {
         if (files) {
             files.forEach(file => {
                 var item = {
@@ -97,7 +96,7 @@ helpers.insertarLog = async(usuario, accion, observacion) => {
     }
     try {
         console.log("Insertando log: " + stringify(log));
-        const a = await db.query("insert into logs SET ?", [log]);
+        const a = await query("insert into logs SET ?", [log]);
         return a;
     } catch (err) {
         console.log(err);
@@ -109,17 +108,17 @@ helpers.insertarLog = async(usuario, accion, observacion) => {
 helpers.dumpearSQL = () => {
     // dump the result straight to a file
     console.log("===============================");
-    console.log(db.config.connectionConfig);
+    console.log(config.connectionConfig);
 
     mysqldump({
         connection: {
-            host: db.config.connectionConfig.host,
-            user: db.config.connectionConfig.user,
-            password: db.config.connectionConfig.password,
-            database: db.config.connectionConfig.database,
+            host: config.connectionConfig.host,
+            user: config.connectionConfig.user,
+            password: config.connectionConfig.password,
+            database: config.connectionConfig.database,
         },
         dumpToFile: './src/public/dumpSQL/dumpSAN' + Date.now() + '.sql',
     });
 }
 
-module.exports = helpers;
+export default helpers;

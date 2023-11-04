@@ -1,15 +1,13 @@
-const express = require('express');
-const { Passport } = require('passport');
-const router = express.Router();
+import { Router } from 'express';
+import 'passport';
+/* import passport from 'passport';
+import funciones from '../lib/funciones.js';
+import pool from "../database.js"; */
 
-const passport=require('passport');
-const funciones = require('../lib/funciones');
+export const apiRouter = Router();
 
-const pool = require("../database");
-
-router.get('/api/prueba',async (req,res)=>{
+apiRouter.get('/api/prueba',async (req,res)=>{
     //PARA GESTIONAR UNA API
     res.redirect(json);
 });
 
-module.exports = router;

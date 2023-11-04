@@ -1,15 +1,16 @@
-const express = require('express');
-const { Passport } = require('passport');
-const router = express.Router();
-const passport=require('passport');
+import { Router } from 'express';
+import passport from "passport";
+//import { authenticate } from 'passport';
+import funciones from '../lib/funciones.js';
+import le from '../lib/passport.js'; //se usa para importar los localstrategies
 
-const funciones = require('../lib/funciones');
+export const authRouter = Router();
 
-router.get('/signup',funciones.isNotAuthenticated,(req,res)=>{
+authRouter.get('/signup',funciones.isNotAuthenticated,(req,res)=>{
     res.render('auth/signup')
 });
 
-router.post('/signup', passport.authenticate('local.signup',{
+authRouter.post('/signup', passport.authenticate('local.signup',{
         successRedirect: '/profile',
         failureRedirect: '/signup',
         passReqToCallback: true,
@@ -17,12 +18,12 @@ router.post('/signup', passport.authenticate('local.signup',{
     })
 );
 
-router.get('/signin',funciones.isNotAuthenticated,(req,res)=>{
+authRouter.get('/signin',funciones.isNotAuthenticated,(req,res)=>{
     res.render('auth/signin');
 });
 
-router.post('/signin',(req,res,next)=>{
-   passport.authenticate('local.signin',{
+authRouter.post('/signin',(req,res,next)=>{
+    passport.authenticate('local.signin',{
        successRedirect: '/profile',
        failureRedirect: '/signin',
        failureFlash:true
@@ -30,14 +31,21 @@ router.post('/signin',(req,res,next)=>{
    })(req,res,next);
 });
 
-router.get('/profile',funciones.isAuthenticated ,(req,res)=>{
+authRouter.get('/logout',funciones.isAuthenticated ,(req,res)=>{
+    req.logOut();
+    res.redirect('/');
+})
+
+//GESTION DEL profile
+
+authRouter.get('/profile',funciones.isAuthenticated ,(req,res)=>{
     res.render('profile');
 });
 
-router.get('/profile/edit',funciones.isAuthenticated ,(req,res)=>{
+authRouter.get('/profile/edit',funciones.isAuthenticated ,(req,res)=>{
     res.render('profileEdit');
 });
-router.post('/profile/edit/',funciones.isAuthenticated ,async (req,res)=>{
+authRouter.post('/profile/edit/',funciones.isAuthenticated ,async (req,res)=>{
      const newUser = {
         usuario:    req.body.usuario,
         contrasena: req.body.contrasena,
@@ -51,11 +59,4 @@ router.post('/profile/edit/',funciones.isAuthenticated ,async (req,res)=>{
     res.render('profile');
 });
 
-router.get('/logout',funciones.isAuthenticated ,(req,res)=>{
-    req.logOut();
-    res.redirect('/');
-})
-
 //TODO: Añadir posibilidad de cambio de contraseña del usuario
-
-module.exports = router;

@@ -1,0 +1,38 @@
+<div class="container pb-2 mb-5">
+  <div class="row">
+    <div class="col-md-12 ">
+
+      {{#if anuncios}}
+      {{#each anuncios}}
+      <a href="/anuncios/list/{{anuncio_id}}">
+        <div class="fichaAnuncio">
+          <p>{{anuncio_id}}</p>
+          <div>
+            <p>{{usuario}}</p>
+            <img class="avatar avatar-s" src="/img/profiles/{{pictureURLusuario}}" alt="">
+          </div>
+          <div>
+            <p>{{nombre}} </p>
+            <img class="miniatura" src="/img/iconos/{{pictureURLactividad}}" alt="">
+          </div>
+          <p>{{salario_propuesto}} € </p>
+          <div>
+            <p>  <i class="fa fa-calendar"></i> {{ formatearSp fecha_hora}} </p>
+            <p>{{ formatearHoras fecha_hora}} </p>
+            <p> <ins>◷</ins>{{duracion}} min</p>
+          </div>
+        </div>
+      </a>
+      {{/each}}
+      {{else}}
+      <div class="col-md-4-mx-auto">
+        <div class="card card-body text-center">
+          <tr>No hay anuncios guardados <a href="/anuncios/add"> Crea uno!</a></tr>
+        </div>
+      </div>
+      {{/if}}
+  <a class="btn btn-warning btn-block" href="javascript:void(0)" onclick="history.back();">Volver</a>
+
+    </div>
+  </div>
+</div>
