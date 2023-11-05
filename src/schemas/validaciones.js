@@ -12,12 +12,18 @@ const actvidadSchema = z.object({
 });
 
 
+
+
 const anunciosSchema = z.object({
     duracion: z.coerce.number().int().positive(),
     actividad_ofrecida_id: z.coerce.number().int().positive(),
     salario_propuesto: z.coerce.number().positive(),
     fecha_hora: z.string().regex(ISO_DATETIME_REGEX, 'date must be a valid ISO date'),
     //fecha_hora: z.coerce.string().datetime({ offset: true }),
+});
+
+const solicitudSchema = z.object({
+   
 });
 
 
@@ -27,4 +33,8 @@ export function validateActividad(object) {
 
 export function validateAnuncio(object) {
     return anunciosSchema.safeParse(object);
+}
+
+export function validateSolicitud(object) {
+    return solicitudSchema.safeParse(object);
 }

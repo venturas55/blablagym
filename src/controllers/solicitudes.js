@@ -1,50 +1,40 @@
-import { AnuncioModel } from '../models/anuncioMysql.js';
+import { SolicitudModel } from '../models/solicitudMysql.js';
 import crypto from 'node:crypto';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-import { validateAnuncio } from '../schemas/validaciones.js';
+import { validateSolicitud } from '../schemas/validaciones.js';
 
-/* import { validateActividad, validatePartialActividad } from '../schemas/actividad.js'; */
 
-export class AnuncioController {
+export class SolicitudController {
     static async getAll(req, res) {
         const { genre } = req.query
-        const anuncios = await AnuncioModel.getAll({ genre });
+        const anuncios = await SolicitudModel.getAll({ genre });
         res.render("anuncios/list", { anuncios });
-
     }
+
+
     static async getById(req, res) {
-        const { anuncio_id } = req.params;
-        const [anuncio] = await AnuncioModel.getById({ id: anuncio_id });
-        console.log(anuncio);
-        res.render("anuncios/plantilla", { anuncio });
+        const { anuncio_id } = req.params
+        const [item] = await SolicitudModel.getById({ id: anuncio_id });
+        console.log(item);
+        res.render("anuncios/plantilla", { item });
     }
     static async create(req, res) {
-        //console.log(req.body);
-        const result = validateAnuncio(req.body);
-        console.log(JSON.stringify(result));
-
-        if (result.error) {
-            res.render("error", { mensaje: result.error })
-        } else {
-            const item = {
-                //anuncio_id: crypto.randomUUID(),
-                creador_id: req.user.id,
-                fecha_hora: req.body.fecha_hora,
-                ...result.data
-            };
-            const a = await AnuncioModel.create({ input: item });
-            // req.flash("success", "Actividad insertado correctamente");
-            res.redirect("/anuncios/list"); //te redirige una vez insertado el item
-        }
-
+        const { anuncio_id } = req.params
+        const item = {
+            anuncio_id,
+            monitor_id: req.user.id,
+        };
+        const a = await SolicitudModel.create({ input: item });
+        // req.flash("success", "Actividad insertado correctamente");
+        res.redirect("/anuncios/list"); //te redirige una vez insertado el item
     }
     static async delete(req, res) {
         const { anuncio_id } = req.params
         console.log("deleteAnuncio: " + JSON.stringify(anuncio_id));
-        const result = await AnuncioModel.delete({ input: anuncio_id })
+        const result = await SolicitudModel.delete({ input: anuncio_id })
         if (result === false) {
             return res.status(404).json({ message: 'Anuncio not found' })
         }
@@ -74,7 +64,9 @@ export class AnuncioController {
             salario_propuesto,
             creador_id: req.user.id
         };
-        const result = await AnuncioModel.update({ input: item })
+        console.log(anuncio_id);
+        console.log(item);
+        const result = await SolicitudModel.update({ input: item })
         if (result === false) {
             return res.status(404).json({ message: 'anuncio not found' })
         }

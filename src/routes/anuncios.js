@@ -1,6 +1,7 @@
 import funciones from "../lib/funciones.js";
 import db from "../database.js"; //db hace referencia a la BBDD
 import { AnuncioController } from '../controllers/anuncios.js'
+import { SolicitudController } from '../controllers/solicitudes.js'
 import { Router } from 'express';
 
 export const anunciosRouter = Router();
@@ -26,3 +27,4 @@ anunciosRouter.get("/edit/:anuncio_id", funciones.isAuthenticated, async (req, r
   res.render("anuncios/edit", { item ,actividades});
 });
 anunciosRouter.post("/edit/:anuncio_id", funciones.isAuthenticated,  AnuncioController.update);
+anunciosRouter.post("/apply/:anuncio_id", funciones.isAuthenticated, SolicitudController.create);

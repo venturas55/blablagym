@@ -1,52 +1,9 @@
 import { ActividadModel } from '../models/actividadMysql.js';
-import multer from "multer";
-import funciones from "../lib/funciones.js";
-import { v4 as uuidv4 } from "uuid";
 import * as url from 'url';
-import * as path from 'path';
-import fs from 'fs-extra';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
 
-/* const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const { user } = req.body;
-        console.log(req);
-        if (typeof user === 'undefined') { //es una foto de icono
-            const dir = path.join(__dirname, '../public/img/iconos/');
-
-            fs.exists(dir, exist => {
-                if (!exist) {
-                    return fs.mkdir(dir, error => cb(error, dir));
-                }
-                return cb(null, dir);
-            })
-        } else {//si no, entonces es una foto de perfil y va a otra carpeta
-            const dir = path.join(__dirname, '../public/img/profiles/');
-            console.log("dir" + dir);
-            return cb(null, dir);
-        }
-    },
-    filename: (req, file, cb) => {
-        cb(null, (uuidv4() + path.extname(file.originalname)).toLowerCase());
-    }
-});
-
-const uploadFoto = multer({
-    storage,
-    limits: { fileSize: 5000000, },
-    fileFilter: (req, file, cb) => {
-        const filetypes = /jpeg|jpg|png|bmp|gif/;
-        const mimetype = filetypes.test(file.mimetype);
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-        if (mimetype && extname) {
-            return cb(null, true);
-        }
-        return cb(("Error: Archivo debe ser una imagen valida jpeg,jpg,png,bmp o gif"));
-    }
-}).single('imagen');
- */
 /* import { validateActividad, validatePartialActividad } from '../schemas/actividad.js'; */
 
 export class ActividadController {
