@@ -1,15 +1,9 @@
-import fs from 'fs-extra';
-import { resolve } from 'path';
 import funciones from "../lib/funciones.js";
 import db from "../database.js"; //db hace referencia a la BBDD
-import os from 'node:os';
 import { AnuncioController } from '../controllers/anuncios.js'
-
-
 import { Router } from 'express';
 
 export const anunciosRouter = Router();
-
 
 //GESTION DEL CRUD
 
