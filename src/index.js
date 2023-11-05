@@ -13,6 +13,8 @@ import handlebars from './lib/handlebars.js';
 //const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
+import { corsMiddleware } from './middlewares/cors.js';
+
 import { indexRouter } from './routes/index.js';
 import { actividadesRouter } from './routes/actividades.js';
 import { anunciosRouter } from './routes/anuncios.js';
@@ -39,7 +41,7 @@ app.engine('.hbs', engine({  //con esto se configura el app.engine
 app.set('view engine', '.hbs'); //Para utilizar el app.engine
 
 
-//Middleware
+//Middlewares
 app.use(session({
     secret: 'mysesion',
     resave: false,
@@ -50,6 +52,7 @@ app.use(flash());       // Para poder usar el middleware de enviar mensajes popu
 app.use(morgan('dev'));
 app.use(urlencoded({ extended: false })); //aceptar los datos desde los formularios sin aceptar imagenes ni nada raro
 app.use(json()); //Para enviar y recibir jsons.
+app.use(corsMiddleware()); //Cors middle
 app.use(passport.initialize()); //iniciar passport
 app.use(passport.session());    //para que sepa donde guardar y como manejar los datos
 
