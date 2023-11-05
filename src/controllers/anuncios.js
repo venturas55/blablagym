@@ -1,8 +1,11 @@
 import { AnuncioModel } from '../models/anuncioMysql.js';
+import crypto from 'node:crypto';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
+import { validateAnuncio } from '../schemas/validaciones.js';
+
 
 /* import { validateActividad, validatePartialActividad } from '../schemas/actividad.js'; */
 
@@ -20,28 +23,25 @@ export class AnuncioController {
         res.render("anuncios/plantilla", { anuncio });
     }
     static async create(req, res) {
-        const {
-            anuncio_id,
-            creador_id,
-            actividad_ofrecida_id,
-            duracion,
-            salario_propuesto,
-            datetimelocal,
-        } = req.body;
-        const item = {
-            anuncio_id,
-            creador_id,
-            actividad_ofrecida_id,
-            duracion,
-            fecha_hora: datetimelocal,
-            salario_propuesto,
-            creador_id: req.user.id
+        //console.log(req.body);
+        const result = validateAnuncio(req.body);
+        console.log(JSON.stringify(result));
 
-        };
-        const result = await AnuncioModel.create({ input: item });
-        console.log("newanuncios: " + JSON.stringify(result));
-        // req.flash("success", "Actividad insertado correctamente");
-        res.redirect("/anuncios/list"); //te redirige una vez insertado el item
+        if (result.error) {
+            res.render("error", { mensaje: result.error })
+        } else {
+            const item = {
+                //anuncio_id: crypto.randomUUID(),
+                creador_id: req.user.id,
+                fecha_hora: req.body.fecha_hora,
+                ...result.data
+            };
+            console.log(JSON.stringify(item));
+            const a = await AnuncioModel.create({ input: item });
+            console.log("newanuncios: " + JSON.stringify(a));
+            // req.flash("success", "Actividad insertado correctamente");
+            res.redirect("/anuncios/list"); //te redirige una vez insertado el item
+        }
 
     }
     static async delete(req, res) {
@@ -66,15 +66,14 @@ export class AnuncioController {
         const {
             actividad_ofrecida_id,
             duracion,
-            fecha,
-            hora,
+            fecha_hora,
             salario_propuesto,
         } = req.body;
         const item = {
             anuncio_id,
             actividad_ofrecida_id,
             duracion,
-            fecha_hora: fecha + " " + hora,
+            fecha_hora,
             salario_propuesto,
             creador_id: req.user.id
         };

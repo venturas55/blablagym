@@ -23,6 +23,7 @@ import { fotosRouter } from './routes/fotos.js';
 
 //Initialization
 const app = express();
+app.disable('x-powered-by'); //Deshabilitar el hjeader X-powered-by: Express
 //import './lib/passport.js'; //para que se entere de la autentificacion que se ha creado 
 
 //Settings

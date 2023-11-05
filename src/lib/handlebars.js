@@ -15,9 +15,10 @@ helpers.formatearSp = (timestamp) => {
 
 helpers.datetimelocal = (timestamp) => {
   if (timestamp) {
+    let t = timestamp.toString().split(/[- :]/);
     let mnth = ("0" + (timestamp.getMonth() + 1)).slice(-2);
     let day = ("0" + timestamp.getDate()).slice(-2);
-    return [timestamp.getFullYear(), mnth,day, ].join("-") + "T16:30";
+    return [timestamp.getFullYear(), mnth,day, ].join("-") + "T"+ t[4] + ":" + t[5];
   }
 }
 
