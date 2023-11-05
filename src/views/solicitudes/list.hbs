@@ -1,0 +1,46 @@
+<div class="container p-4 pb-2 mb-5">
+  <div class="row">
+    <div class="col-md-12">
+      {{#if items}}
+      <table class="listado">
+        <tr>
+          <th>Creador</th>
+          <th>Solicitante</th>
+          <th>Imagen</th>
+          <th>Accion</th>
+
+        </tr>
+        {{#each items}}
+        <tr>
+          <td>{{this.usuario_creador}} - {{this.full_name_creador}} <img src="/img/profiles/{{this.pictureURL_creador}}"
+              class="acatar avatar-s m-2" alt="avatar {{this.pictureURL_creador}}'" /> </td>
+          <td>{{this.usuario_solicitante}} - {{this.full_name_solicitante}} <img
+              src="/img/profiles/{{this.pictureURL_solicitante}}" class="avatar avatar-s m-2"
+              alt="avatar {{this.pictureURL_solicitante}}'" /> </td>
+          <td> </td>
+          <td>
+            <a href="/solicitudes/edit/{{this.actividad_id}}" class="text-warning"><i
+                class="fa-solid fa-pen"></i>Edit</a>
+            <a href="/solicitudes/delete/{{this.actividad_id}}" class="text-warning"><i
+                class="fa-solid fa-trash"></i>Del</a>
+          </td>
+        </tr>
+
+        {{/each}}
+      </table>
+      {{else}}
+      <div class="col-md-4-mx-auto">
+        <div class="card card-body text-center">
+          <tr>No hay solicitudes guardados <a href="/solicitudes/add"> Crea una!</a></tr>
+        </div>
+      </div>
+      {{/if}}
+
+    </div>
+    <div class="container text-center mb-5">
+      <a class="btn btn-warning" href="javascript:void(0)" onclick="history.back();">Volver</a>
+
+
+    </div>
+  </div>
+</div>

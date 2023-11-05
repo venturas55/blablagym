@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="/">
-    <img class="avatar avatar-s mx-2"  src="/img/logo.png" alt=""> BLABLAGYM</a>
+      <img class="avatar avatar-s mx-2" src="/img/logo.png" alt=""> BLABLAGYM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -18,19 +18,35 @@
         <li class="nav-item">
           <a class="nav-link" href="/actividades/add" tabindex="-1" aria-disabled="true">Crear actividad</a>
         </li>
-        <a href="/profile">
-        {{>avatar}}
-        </a>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout " tabindex="-1" aria-disabled="true">Logout</a>
-        </li>
-        {{else}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              {{>avatar}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+              <a class="dropdown-item" href="/profile">Perfil</a>
+              <hr class="dropdown-divider">
+              <a class="dropdown-item" href="/solicitudes/list?monitor_id={{user.id}}">Ver mis solicitudes</a>
+              <a class="dropdown-item" href="/solicitudes/list?creador_id={{user.id}}">Ver mis anuncios</a>
+              <hr class="dropdown-divider">
+              <a class="dropdown-item" href="/transferencias">Transferencias</a>
+              <a class="dropdown-item" href="/pagos">PAgos y reembolsos</a>
+              <hr class="dropdown-divider">
+              <a class="dropdown-item" href="/chat">Mis mensajes</a>
+              <hr class="dropdown-divider">
+              <a class="dropdown-item" href="/logout ">Cerrar sesión </a>
+            </div>
+        </li>
+
+        {{else}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             {{>avatar}}
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
             <a class="dropdown-item" href="/signin">Iniciar Sesion</a>
             <a class="dropdown-item" href="/signup ">Registrarse </a>
           </div>

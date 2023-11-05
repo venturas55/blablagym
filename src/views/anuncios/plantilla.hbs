@@ -44,7 +44,7 @@
         </div>
         <a class="btn btn-primary btn-xs" href="/anuncios/edit/{{anuncio.anuncio_id}}"> MODIFICAR</a>
         <a class="btn btn-danger btn-xs" href="/anuncios/delete/{{anuncio.anuncio_id}}"> ELIMINAR </a>
-        <form action="/anuncios/apply/{{anuncio.anuncio_id}}" method="POST">
+        <form action="/solicitudes/add/{{anuncio.anuncio_id}}" method="POST">
             <button class="btn btn-secondary btn-xs" href="/anuncios/apply/{{anuncio.anuncio_id}}"> APLICAR </button>
         </form>
         <a class="btn btn-warning " href="javascript:void(0)" onclick="history.back();">Volver</a>

@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { unlink } from 'fs';
 //import fs from 'fs';
 import { join, extname as _extname, resolve } from 'path';
 import db from "../database.js"; //db hace referencia a la BBDD
@@ -8,7 +7,9 @@ import multer, { diskStorage } from 'multer';
 import { access, constants } from 'fs';
 import funciones from "../lib/funciones.js";
 import { v4 as uuidv4 } from 'uuid';
-
+import * as url from 'url';
+//const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 export const fotosRouter = Router();
 

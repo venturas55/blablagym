@@ -9,9 +9,19 @@ import { validateSolicitud } from '../schemas/validaciones.js';
 
 export class SolicitudController {
     static async getAll(req, res) {
-        const { genre } = req.query
-        const anuncios = await SolicitudModel.getAll({ genre });
-        res.render("anuncios/list", { anuncios });
+        const { creador_id, monitor_id } = req.query;
+        console.log(creador_id, monitor_id);
+        let items;
+        if (creador_id){
+            items = await SolicitudModel.getAll({ creador_id });
+            console.log(items);
+            res.render("solicitudes/list", { items });
+        }
+        if (monitor_id){
+            items = await SolicitudModel.getAll({ monitor_id });
+            console.log(items);
+            res.render("solicitudes/list", { items });
+        }
     }
 
 
