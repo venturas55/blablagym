@@ -1,24 +1,23 @@
 <div class="container pb-2 mb-5">
   <div class="row">
-    <div class="col-md-12 ">
+    <div class="col-md-12 text-center">
       {{#if anuncios}}
       {{#each anuncios}}
       <a href="/anuncios/list/{{anuncio_id}}">
-        <div class="fichaAnuncio">
+        <div class="fichaAnuncio w-100">
           <p>{{anuncio_id}}</p>
-          <div>
+          <div class="mb-2">
             <p>{{usuario}}</p>
-            <img class="avatar avatar-s" src="/img/profiles/{{pictureURLusuario}}" alt="">
+            <img class="avatar avatar-s" src="/img/profiles/{{pictureURLusuario}}" alt="user foto">
           </div>
-          <div>
+          <div class="mb-3">
+            <img class="miniatura" src="/img/iconos/{{pictureURLactividad}}" alt="act foto">
             <p>{{nombre}} </p>
-            <img class="miniatura" src="/img/iconos/{{pictureURLactividad}}" alt="">
           </div>
-          <p>{{salario_propuesto}} € </p>
+          <p>{{salario_propuesto}} <i class="fa fa-solid fa-euro-sign"></i> </p>
           <div>
-            <p> <i class="fa fa-calendar"></i> {{ formatearSp fecha_hora}} </p>
-            <p>{{ formatearHoras fecha_hora}} </p>
-            <p> <ins>◷</ins>{{duracion}} min</p>
+            <p> <i class="fa fa-calendar"></i> El {{ formatearSp fecha_hora}} a las {{ formatearHoras fecha_hora}} </p>
+            <p>duración de <i class="fa fa-solid fa-clock"></i> {{duracion}} min</p>
           </div>
         </div>
       </a>
@@ -30,18 +29,17 @@
         </div>
       </div>
       {{/if}}
-      <a class="btn btn-warning btn-block" href="javascript:void(0)" onclick="history.back();">Volver</a>
+      <a class="btn btn-warning btn-block mb-4" href="javascript:void(0)" onclick="history.back();">Volver</a>
     </div>
   </div>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button>
+  <div class="text-center">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Launch demo modal
+    </button>
+  </div>
 </div>
 
-
-
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -70,3 +68,4 @@
       </div>
     </div>
   </div>
+</div>

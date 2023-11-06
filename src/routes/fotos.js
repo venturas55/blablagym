@@ -1,5 +1,5 @@
 import { Router } from "express";
-//import fs from 'fs';
+import fs from 'fs-extra';
 import { join, extname as _extname, resolve } from 'path';
 import db from "../database.js"; //db hace referencia a la BBDD
 import multer, { diskStorage } from 'multer';

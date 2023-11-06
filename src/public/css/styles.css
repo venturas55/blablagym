@@ -63,7 +63,7 @@ select {
 }
 
 .fichaAnuncio {
-  width: 500px;
+ /*  width: 500px; */
   height: 200px;
   display: flex;
   flex-flow: column wrap;
