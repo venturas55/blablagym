@@ -1,6 +1,6 @@
 <div class="container m-auto mb-5">
   <div class="row p-3">
-    <div class="col-md-3 text-center">
+    <div class="col-12 text-center">
       {{#if items}}
       <table class="table table-dark table-striped-columns">
         <tr>
@@ -17,14 +17,21 @@
           <td>{{this.usuario_solicitante}} - {{this.full_name_solicitante}} <img
               src="/img/profiles/{{this.pictureURL_solicitante}}" class="avatar avatar-s m-2"
               alt="avatar {{this.pictureURL_solicitante}}'" /> </td>
-          <td> 
-        <img class="card-img-top miniatura" alt="preview foto actividad" src="/img/iconos/{{this.pictureURL_actividad}}" />
+          <td>
+            <img class="card-img-top miniatura" alt="preview foto actividad"
+              src="/img/iconos/{{this.pictureURL_actividad}}" />
+            <span>{{formatearSp this.fecha_hora}} a las {{formatearHoras this.fecha_hora}} </span>
+            <p><i class="fa-solid fa-clock"></i> {{this.duracion}} min</p>
+            <p>{{this.salario_propuesto}}<i class="fa-solid fa-euro-sign"></i></p>
           </td>
           <td>
             <a href="/solicitudes/edit/{{this.actividad_id}}" class="text-warning"><i
                 class="fa fa-solid fa-pen"></i>Edit</a>
             <a href="/solicitudes/delete/{{this.actividad_id}}" class="text-warning"><i
                 class="fa fa-solid fa-trash"></i>Del</a>
+            <a href="/solicitudes/accept/{{this.actividad_id}}" class="text-warning"><i
+                class="fa fa-solid fa-hand-holding-hand"></i>Del</a>
+
           </td>
         </tr>
 
