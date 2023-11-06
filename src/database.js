@@ -17,7 +17,7 @@ pool.getConnection((err, connection) => {
             return 'ECONNREFUSED';
         }
         if (err.code === 'ER_ACCESS_DENIED_ERROR') {
-            console.error('ACCESO denegado\n' + stringify(database));
+            console.error('ACCESO denegado\n');
         }
     } else if (connection) {
         connection.release(); //con esto empieza la conexion

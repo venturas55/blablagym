@@ -33,12 +33,14 @@
     "node-alerts": "^2.0.2",
     "node-notifier": "^10.0.1",
     "node-popup": "^0.1.14",
-    "nodemon": "^2.0.15",
-    "passport": "^0.5.3",
+    "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "sessions": "^0.0.2-7",
     "timeago.js": "^4.0.2",
     "uuid": "^9.0.1",
     "zod": "3.22.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

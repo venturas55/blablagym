@@ -41,8 +41,6 @@ app.engine('.hbs', engine({  //con esto se configura el app.engine
 }));
 app.set('view engine', '.hbs'); //Para utilizar el app.engine
 
-
-
 //Middlewares
 app.use(session({
     secret: 'mysesion',
