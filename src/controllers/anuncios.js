@@ -4,9 +4,7 @@ import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-import { validateAnuncio } from '../schemas/validaciones.js';
-
-/* import { validateActividad, validatePartialActividad } from '../schemas/actividad.js'; */
+import { validateAnuncio,validatePartialAnuncio } from '../schemas/validaciones.js';
 
 export class AnuncioController {
     static async getAll(req, res) {

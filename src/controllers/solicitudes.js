@@ -4,7 +4,7 @@ import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-import { validateSolicitud } from '../schemas/validaciones.js';
+import { validateSolicitud,validatePartialSolicitud } from '../schemas/validaciones.js';
 
 
 export class SolicitudController {

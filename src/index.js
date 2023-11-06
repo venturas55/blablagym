@@ -61,9 +61,9 @@ app.use(passport.session());    //para que sepa donde guardar y como manejar los
 //Variables globales
 
 app.use((req, res, next) => {
-    app.locals.signupMessage = req.flash('signupMessage');
     app.locals.success = req.flash('success');
-    app.locals.message = req.flash('message');
+    app.locals.warning = req.flash('warning');
+    app.locals.danger = req.flash('danger');
     app.locals.user = req.user;
     next();
 });
@@ -76,10 +76,10 @@ app.use('/js', express.static(path.join(__dirname + '../node_modules/jquery/dist
 
 //Routes
 app.use(indexRouter);
+app.use(authRouter);
 app.use('/actividades', actividadesRouter);
 app.use('/anuncios', anunciosRouter);
 app.use('/solicitudes', solicitudesRouter);
-app.use(authRouter);
 app.use(apiRouter);
 app.use(fotosRouter);
 

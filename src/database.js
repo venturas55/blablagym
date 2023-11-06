@@ -13,12 +13,11 @@ pool.getConnection((err, connection) => {
             console.error('La Database tiene demasiadas conexiones');
         }
         if (err.code === 'ECONNREFUSED') {
-
             console.error('database conexion fue rechazada');
-   return 'ECONNREFUSED';
+            return 'ECONNREFUSED';
         }
         if (err.code === 'ER_ACCESS_DENIED_ERROR') {
-            console.error('ACCESO denegado\n'+ stringify( database));
+            console.error('ACCESO denegado\n' + stringify(database));
         }
     } else if (connection) {
         connection.release(); //con esto empieza la conexion

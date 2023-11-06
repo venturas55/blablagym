@@ -4,7 +4,7 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
 
-/* import { validateActividad, validatePartialActividad } from '../schemas/actividad.js'; */
+import { validateActividad, validatePartialActividad } from '../schemas/validaciones.js';
 
 export class ActividadController {
 
@@ -23,12 +23,12 @@ export class ActividadController {
     }
 
     static async create(req, res) {
-        /*       const result = validateMovie(req.body);
-      
-              if (!result.success) {
-                  // 422 Unprocessable Entity
-                  return res.status(400).json({ error: JSON.parse(result.error.message) });
-              } */
+        const result = validateActividad(req.body);
+
+        if (!result.success) {
+            // 422 Unprocessable Entity
+            return res.status(400).json({ error: JSON.parse(result.error.message) });
+        }
         var pictureURL = "";
         if (typeof req.file !== 'undefined')
             pictureURL = req.file.filename;
@@ -42,9 +42,8 @@ export class ActividadController {
             pictureURL,
 
         };
-        const result = await ActividadModel.create({ input: item });
-        console.log("newActividad: " + JSON.stringify(result));
-        // req.flash("success", "Actividad insertado correctamente");
+        const nuevaACt = await ActividadModel.create({ input: item });
+        req.flash("success", "Actividad insertado correctamente");
         res.redirect("/actividades/list"); //te redirige una vez insertado el item
 
     }
@@ -62,40 +61,40 @@ export class ActividadController {
     }
 
     static async update(req, res) {
-       /*  const result = validatePartialMovie(req.body)
-
-        if (!result.success) {
-            return res.status(400).json({ error: JSON.parse(result.error.message) })
-        } */
+        /*  const result = validatePartialMovie(req.body)
+ 
+         if (!result.success) {
+             return res.status(400).json({ error: JSON.parse(result.error.message) })
+         } */
 
         const { id } = req.params;
         try {
-          const {
-            nombre,
-            descripcion,
-            pictureURL
-          } = req.body;
-          if (typeof req.file !== 'undefined'){
-            pictureURL = req.file.filename;
-          }
-          const newItem = {
-            actividad_id:id,
-            nombre,
-            descripcion,
-            pictureURL,
-          };
-          console.log(newItem);
-          console.log(req.file);
-          const result = await ActividadModel.update({ input: newItem })
-          if (result === false) {
-              return res.status(404).json({ message: 'Actividad not found' })
-          }
-              //req.flash("success", "Actividad modificada correctamente");
-          res.redirect("/actividades/list");
+            const {
+                nombre,
+                descripcion,
+                pictureURL
+            } = req.body;
+            if (typeof req.file !== 'undefined') {
+                pictureURL = req.file.filename;
+            }
+            const newItem = {
+                actividad_id: id,
+                nombre,
+                descripcion,
+                pictureURL,
+            };
+            console.log(newItem);
+            console.log(req.file);
+            const result = await ActividadModel.update({ input: newItem })
+            if (result === false) {
+                return res.status(404).json({ message: 'Actividad not found' })
+            }
+            //req.flash("success", "Actividad modificada correctamente");
+            res.redirect("/actividades/list");
         } catch (error) {
-          console.error(error.code);
-          //req.flash("error", "Hubo algun error");
-          res.redirect("/error");
+            console.error(error.code);
+            //req.flash("error", "Hubo algun error");
+            res.redirect("/error");
         }
 
     }

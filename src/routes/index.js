@@ -3,7 +3,6 @@ import { Router } from 'express';
 export const indexRouter = Router();
 
 indexRouter.get('/',(req,res)=>{
-    console.log("indexRouter.get");
     res.render('index');
 } );
 

@@ -1,5 +1,6 @@
 import z from 'zod';
 const ISO_DATETIME_REGEX = /\d{4}-[01]\d-[0-3]\d/;
+
 const actvidadSchema = z.object({
     nombre: z.string({
         invalid_type_error: 'Actividad tiene que ser un string',
@@ -10,9 +11,6 @@ const actvidadSchema = z.object({
         required_error: 'descripcion es requerido'
     })
 });
-
-
-
 
 const anunciosSchema = z.object({
     duracion: z.coerce.number().int().positive(),
@@ -38,3 +36,16 @@ export function validateAnuncio(object) {
 export function validateSolicitud(object) {
     return solicitudSchema.safeParse(object);
 }
+
+export function validatePartialActividad(object) {
+    return actvidadSchema.partial().safeParse(object);
+}
+
+export function validatePartialAnuncio(object) {
+    return anunciosSchema.partial().safeParse(object);
+}
+
+export function validatePartialSolicitud(object) {
+    return solicitudSchema.partial().safeParse(object);
+}
+
