@@ -1,7 +1,6 @@
 <div class="container pb-2 mb-5">
   <div class="row">
     <div class="col-md-12 ">
-
       {{#if anuncios}}
       {{#each anuncios}}
       <a href="/anuncios/list/{{anuncio_id}}">
@@ -17,7 +16,7 @@
           </div>
           <p>{{salario_propuesto}} € </p>
           <div>
-            <p>  <i class="fa fa-calendar"></i> {{ formatearSp fecha_hora}} </p>
+            <p> <i class="fa fa-calendar"></i> {{ formatearSp fecha_hora}} </p>
             <p>{{ formatearHoras fecha_hora}} </p>
             <p> <ins>◷</ins>{{duracion}} min</p>
           </div>
@@ -31,36 +30,43 @@
         </div>
       </div>
       {{/if}}
-  <a class="btn btn-warning btn-block" href="javascript:void(0)" onclick="history.back();">Volver</a>
-
+      <a class="btn btn-warning btn-block" href="javascript:void(0)" onclick="history.back();">Volver</a>
     </div>
   </div>
-    <div class="row">
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-
-    </div>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
 </div>
 
 
-<div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Modal body text goes here.</p>
+        <div class="modal-body">
+          <h2 class="fs-5">Popover in a modal</h2>
+          <p>This <button class="btn btn-secondary" data-bs-toggle="popover" title="Popover title"
+              data-bs-content="Popover body content is set in this attribute.">button</button> triggers a popover on
+            click.</p>
+          <hr>
+          <h2 class="fs-5">Tooltips in a modal</h2>
+          <p><a href="#" data-bs-toggle="tooltip" title="Tooltip">This link</a> and <a href="#" data-bs-toggle="tooltip"
+              title="Tooltip">that link</a> have tooltips on hover.</p>
+        </div>
+
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
-</div>
