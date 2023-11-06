@@ -42,6 +42,7 @@ app.engine('.hbs', engine({  //con esto se configura el app.engine
 app.set('view engine', '.hbs'); //Para utilizar el app.engine
 
 
+
 //Middlewares
 app.use(session({
     secret: 'mysesion',
@@ -69,6 +70,9 @@ app.use((req, res, next) => {
 
 //Public
 app.use(express.static(__dirname + '/public'));
+app.use('/css', express.static(path.join(__dirname + '../node_modules/bootstrap/dist/css')))
+app.use('/js', express.static(path.join(__dirname + '../node_modules/bootstrap/dist/js')))
+app.use('/js', express.static(path.join(__dirname + '../node_modules/jquery/dist')))
 
 //Routes
 app.use(indexRouter);
