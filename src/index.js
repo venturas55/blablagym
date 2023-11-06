@@ -57,7 +57,6 @@ app.use(passport.initialize()); //iniciar passport
 app.use(passport.session());    //para que sepa donde guardar y como manejar los datos
 
 //Variables globales
-
 app.use((req, res, next) => {
     app.locals.success = req.flash('success');
     app.locals.warning = req.flash('warning');

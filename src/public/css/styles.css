@@ -76,6 +76,10 @@ select {
   padding: 15px;
   text-decoration: none;
 }
+
+.fa{
+  color:rgb(191, 0, 255);
+}
 a *{
   text-decoration: none !important;
   color:black;
