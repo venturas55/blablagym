@@ -4,21 +4,28 @@
       {{#if anuncios}}
       {{#each anuncios}}
       <a href="/anuncios/list/{{anuncio_id}}">
-        <div class="fichaAnuncio w-100">
-          <p>Creado el {{ formatearSp created_at}} a las {{formatearHoras created_at}} id:{{anuncio_id}} </p>
-          <div class="mb-2">
+        <div class="fichaAnuncio w-75">
+          <div class="">
+            <p>Creado el {{ formatearSp created_at}} a las {{formatearHoras created_at}} id:{{anuncio_id}} </p>
             <p>{{usuario}}</p>
             <img class="avatar avatar-s" src="/img/profiles/{{pictureURLusuario}}" alt="user foto">
           </div>
-          <div class="mb-3">
+          <div class="">
             <img class="miniatura" src="/img/iconos/{{pictureURLactividad}}" alt="act foto">
             <p>{{nombre}} </p>
+            <p>{{salario_propuesto}} <i class="fa fa-solid fa-euro-sign"></i> </p>
           </div>
-          <p>{{salario_propuesto}} <i class="fa fa-solid fa-euro-sign"></i> </p>
-          <div>
+          <div class="">
             <p> <i class="fa fa-calendar"></i> El {{ formatearSp fecha_hora}} a las {{ formatearHoras fecha_hora}} </p>
             <p>duración de <i class="fa fa-solid fa-clock"></i> {{duracion}} min</p>
-            {{#if numero_de_solicitudes}} <p>Num Sol: {{numero_de_solicitudes}}</p> {{/if}}
+
+            {{#if numero_de_solicitudes}}
+            <p>Num Sol: {{numero_de_solicitudes}}</p>
+
+            {{/if}}
+            <form action="/anuncios/{{anuncio_id}}">
+              <button type="button" class="btn btn-primary" onclick="">Ver solicitudes</button>
+            </form>
           </div>
         </div>
       </a>
@@ -26,13 +33,14 @@
       {{else}}
       <div class="col-md-4-mx-auto">
         <div class="card card-body text-center">
-          <tr>No hay anuncios guardados <a href="/anuncios/add"> Crea uno!</a></tr>
+          <p>No hay anuncios guardados <a href="/anuncios/add"> Crea uno!</a></p>
         </div>
       </div>
       {{/if}}
       <a class="btn btn-warning btn-block mb-4" href="javascript:void(0)" onclick="history.back();">Volver</a>
     </div>
   </div>
+
   <!-- Button trigger modal -->
   <div class="text-center">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">

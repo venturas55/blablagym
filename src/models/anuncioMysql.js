@@ -10,7 +10,7 @@ export class AnuncioModel {
   static async getAll({ creador_id }) {
     let anuncios;
     if (creador_id) {
-      anuncios = await db.query(sqlanunciosConSolicitudes+" WHERE  a.creador_id = ? GROUP BY   a.anuncio_id", [creador_id]);
+      anuncios = await db.query(sqlanunciosConSolicitudes+" WHERE  a.creador_id = ? GROUP BY   a.anuncio_id order by a.fecha_hora", [creador_id]);
     } else{
       anuncios = await db.query(sqlAnuncios + " order by a.fecha_hora");
     }

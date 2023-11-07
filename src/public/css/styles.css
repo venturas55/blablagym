@@ -66,7 +66,7 @@ select {
  /*  width: 500px; */
   height: 200px;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row nowrap;
   background: white;
   margin: auto;
   border-radius: 20px;
@@ -75,11 +75,14 @@ select {
   margin: 25px auto;
   padding: 15px;
   text-decoration: none;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .fa{
   color:rgb(191, 0, 255);
 }
+
 a *{
   text-decoration: none !important;
   color:black;

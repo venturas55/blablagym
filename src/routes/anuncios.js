@@ -10,6 +10,7 @@ export const anunciosRouter = Router();
 //READ
 anunciosRouter.get("/list", AnuncioController.getAll);
 anunciosRouter.get("/list/:anuncio_id", AnuncioController.getById);
+anunciosRouter.get("/:anuncio_id", AnuncioController.getById);
 //CREATE
 anunciosRouter.get("/add", funciones.isAuthenticated,async  (req, res) => {
   const actividades = await db.query("SELECT * FROM actividades");
