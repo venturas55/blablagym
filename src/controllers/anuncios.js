@@ -8,8 +8,8 @@ import { validateAnuncio,validatePartialAnuncio } from '../schemas/validaciones.
 
 export class AnuncioController {
     static async getAll(req, res) {
-        const { genre } = req.query
-        const anuncios = await AnuncioModel.getAll({ genre });
+        const { creador_id } = req.query;
+        const anuncios = await AnuncioModel.getAll({ creador_id });
         res.render("anuncios/list", { anuncios });
 
     }

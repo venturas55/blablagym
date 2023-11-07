@@ -25,12 +25,13 @@
             <p>{{this.salario_propuesto}}<i class="fa-solid fa-euro-sign"></i></p>
           </td>
           <td>
+            <div>
             <a href="/solicitudes/edit/{{this.actividad_id}}" class="text-warning"><i
-                class="fa fa-solid fa-pen"></i>Edit</a>
-            <a href="/solicitudes/delete/{{this.actividad_id}}" class="text-warning"><i
-                class="fa fa-solid fa-trash"></i>Del</a>
-            <a href="/solicitudes/accept/{{this.actividad_id}}" class="text-warning"><i
-                class="fa fa-solid fa-hand-holding-hand"></i>Del</a>
+                class="fa fa-solid fa-pen"></i> Edit</a></div>
+             <div> <a href="/solicitudes/delete/{{this.actividad_id}}" class="text-warning"><i
+                class="fa fa-solid fa-trash"></i> Del</a></div>
+             <div> <a href="/solicitudes/accept/{{this.actividad_id}}" class="text-warning"><i
+                class="fa fa-solid fa-hand-holding-hand"></i> Accept</a></div>
 
           </td>
         </tr>

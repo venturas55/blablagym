@@ -10,12 +10,10 @@ export const readJSON = (path) => require(path)
 export class SolicitudModel {
   static async getAll({ creador_id, monitor_id }) {
     let actividades;
-    if (creador_id) {
-      actividades = await db.query(ticketAnunciosSolicitudesQuery + " where a.creador_id=?", creador_id);
-    } else if (monitor_id) {
+   if (monitor_id) {
       actividades = await db.query(ticketAnunciosSolicitudesQuery + " where s.monitor_id=?", monitor_id);
     } else {
-      actividades = await db.query(ticketQuery);
+      actividades = await db.query(ticketAnunciosSolicitudesQuery);
     }
     return actividades;
   }
