@@ -1,10 +1,11 @@
 import { SolicitudModel } from '../models/solicitudMysql.js';
+import { AnuncioModel } from '../models/anuncioMysql.js';
 import crypto from 'node:crypto';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-import { validateSolicitud,validatePartialSolicitud } from '../schemas/validaciones.js';
+import { validateSolicitud, validatePartialSolicitud } from '../schemas/validaciones.js';
 
 
 export class SolicitudController {
@@ -12,12 +13,12 @@ export class SolicitudController {
         const { creador_id, monitor_id } = req.query;
         console.log(creador_id, monitor_id);
         let items;
-        if (creador_id){
+        if (creador_id) {
             items = await SolicitudModel.getAll({ creador_id });
             console.log(items);
             res.render("solicitudes/list", { items });
         }
-        if (monitor_id){
+        if (monitor_id) {
             items = await SolicitudModel.getAll({ monitor_id });
             console.log(items);
             res.render("solicitudes/list", { items });
@@ -37,9 +38,26 @@ export class SolicitudController {
             anuncio_id,
             monitor_id: req.user.id,
         };
-        const a = await SolicitudModel.create({ input: item });
-        // req.flash("success", "Actividad insertado correctamente");
-        res.redirect("/anuncios/list"); //te redirige una vez insertado el item
+        const [anuncio] = await AnuncioModel.getById({ anuncio_id });
+        const solicitudes = await SolicitudModel.getAll({ monitor_id: item.monitor_id });
+        console.log("Vienen solicitudes");
+        let yaHizosolicitud = solicitudes.some((el) => {
+            let a = el.monitor_id + "/" + el.anuncio_id;
+            let b = item.monitor_id + "/" + item.anuncio_id;
+            /*   console.log(a+ " = " + b); */
+            return (a == b);
+        })
+        if (anuncio.creador_id == item.monitor_id) {
+            req.flash("warning", "No puedes aplicar a tu mismo anuncio");
+            res.redirect("/anuncios/list"); //te redirige una vez insertado el item
+        } else if (yaHizosolicitud) {
+            req.flash("warning", "Ya solicitaste para este anuncio");
+            res.redirect("/anuncios/list"); //te redirige una vez insertado el item
+        } else {
+            const a = await SolicitudModel.create({ input: item });
+            req.flash("success", "Solicitud realizada correctamente");
+            res.redirect("/anuncios/list"); //te redirige una vez insertado el item
+        }
     }
     static async delete(req, res) {
         const { anuncio_id } = req.params

@@ -15,9 +15,8 @@ export class AnuncioController {
     }
     static async getById(req, res) {
         const { anuncio_id } = req.params;
-        const [anuncio] = await AnuncioModel.getById({ id: anuncio_id });
-        console.log(anuncio);
-        res.render("anuncios/plantilla", { anuncio });
+        const anuncio = await AnuncioModel.getById({ anuncio_id });
+        res.render("anuncios/plantilla", { anuncio:anuncio[0] });
     }
     static async create(req, res) {
         //console.log(req.body);

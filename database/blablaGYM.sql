@@ -70,6 +70,7 @@ CREATE TABLE Solicitudes (
   solicitud_id INT PRIMARY KEY AUTO_INCREMENT,
   anuncio_id INT,
   monitor_id INT,
+  UNIQUE KEY `my_uniq_id` (anuncio_id,monitor_id),
   FOREIGN KEY (anuncio_id) REFERENCES Anuncios(anuncio_id),
   FOREIGN KEY (monitor_id) REFERENCES usuarios(id)
 );

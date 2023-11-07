@@ -10,25 +10,21 @@ export class AnuncioModel {
   static async getAll({ creador_id }) {
     let anuncios;
     if (creador_id) {
-      console.log("sqlanunciosConSolicitudes");
       anuncios = await db.query(sqlanunciosConSolicitudes+" WHERE  a.creador_id = ? GROUP BY   a.anuncio_id", [creador_id]);
     } else{
-      console.log("sqlAnuncios");
       anuncios = await db.query(sqlAnuncios + " order by a.fecha_hora");
     }
-    console.log(anuncios);
     return anuncios;
   }
 
-  static async getById({ id }) {
-    const anuncio = await db.query(sqlanunciosConSolicitudes + " where a.anuncio_id=?", [id]);
+  static async getById({ anuncio_id }) {
+    const anuncio = await db.query(sqlanunciosConSolicitudes + " where a.anuncio_id=? ", [anuncio_id]);
     return anuncio;
   }
 
   static async create({ input }) {
     try {
       const a = await db.query("INSERT INTO anuncios set ?", [input]);
-      console.log(">_: "+a);
       return a;
     } catch (error) {
       console.error(error.code);

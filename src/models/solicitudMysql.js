@@ -9,13 +9,13 @@ export const readJSON = (path) => require(path)
 
 export class SolicitudModel {
   static async getAll({ creador_id, monitor_id }) {
-    let actividades;
-   if (monitor_id) {
-      actividades = await db.query(ticketAnunciosSolicitudesQuery + " where s.monitor_id=?", monitor_id);
+    let solicitudes;
+    if (monitor_id) {
+      solicitudes = await db.query(ticketAnunciosSolicitudesQuery + " where s.monitor_id=?", monitor_id);
     } else {
-      actividades = await db.query(ticketAnunciosSolicitudesQuery);
+      solicitudes = await db.query(ticketAnunciosSolicitudesQuery);
     }
-    return actividades;
+    return solicitudes;
   }
 
   static async getById({ id }) {
@@ -35,8 +35,6 @@ export class SolicitudModel {
   }
   static async delete({ input }) {
     try {
-      console.log("DELETE FROM solicitudes");
-      console.log(input);
       await db.query("DELETE FROM solicitudes WHERE solicitudes_id=?", [input]);
     } catch (error) {
       console.error(error.code);
