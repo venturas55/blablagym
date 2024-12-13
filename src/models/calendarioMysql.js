@@ -18,7 +18,7 @@ export class CalendarioModel {
 
   static async getAll3m() {
     //Calendario tiene que ser un listado de las clases con toda la info y con los asistentes de cada clase.
-    const calendario = await db.query(sqlSelectQueryActivity + " WHERE fecha_hora >= DATE_FORMAT(CURDATE(), '%Y-%m-01') AND fecha_hora < DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 3 MONTH), '%Y-%m-01');");
+    const calendario = await db.query(sqlSelectQueryActivity + " WHERE c.fecha_hora >= DATE_FORMAT(CURDATE(), '%Y-%m-01') AND c.fecha_hora < DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 3 MONTH), '%Y-%m-01') order by c.fecha_hora asc");
     return calendario;
   }
 

@@ -2,15 +2,33 @@ import { CalendarioModel } from '../models/calendarioMysql.js';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import { createRequire } from 'node:module';
+import moment from 'moment';
 const require = createRequire(import.meta.url);
 import { validateCalendario, validatePartialCalendario } from '../schemas/validaciones.js';
 
 
 export class CalendarioController {
     static async getAll(req, res) {
-        let input="";
+        let input = "";
         const clases = await CalendarioModel.getAll3m(input);
-        res.render("calendario/list", { clases, });
+        // Ordenar las clases por fecha
+       
+        const clasesOrdenadas = clases.sort((a, b) => new Date(a.fecha_hora) - new Date(b.fecha_hora));
+
+        // Agrupar las clases por día de la semana (Lunes=1, ..., Domingo=7)
+        const clasesPorDia = [[], [], [], [], [], [], []]; // Array para los 7 días
+        clasesOrdenadas.forEach((clase) => {
+            const diaSemana = moment(clase.fecha_hora).isoWeekday(); // Lunes=1, Domingo=7
+            clasesPorDia[diaSemana - 1].push(clase);
+        });
+
+        // Opcional: Asegurar que cada día también esté ordenado (redundante si ya está ordenado antes del agrupamiento)
+        clasesPorDia.forEach((dia) => {
+            dia.sort((a, b) => new Date(b.fecha_hora) - new Date(a.fecha_hora)); // Orden ascendente por hora
+        });
+
+        console.log(clasesPorDia);
+        res.render("calendario/list", { clases: clasesPorDia, });
     }
 
 
@@ -26,12 +44,8 @@ export class CalendarioController {
             clase_id,
             usuario_id: req.user.id,
         };
-        console.log("Va");
         console.log(item);
-
         //const solicitudes = await CalendarioModel.getAll({ monitor_id: item.monitor_id });
-
-
         const a = await CalendarioModel.create({ input: item });
         req.flash("success", "Solicitud realizada correctamente");
         res.redirect("/asistencias/list"); //te redirige una vez insertado el item

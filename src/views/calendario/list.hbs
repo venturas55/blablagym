@@ -27,10 +27,10 @@
           <td>
             <a href="/clases/edit/{{this.clase_id}}" class="text-warning"><i class="fa-solid fa-pen"></i>Edit</a>
             <a href="/clases/delete/{{this.clase_id}}" class="text-warning"><i class="fa-solid fa-trash"></i>Del</a>
-            <form action="/asistencias/add/{{this.clase_id}}" method="post"> 
-             <a onclick="this.parentNode.submit();" class="text-warning"><i class="fa-solid fa-user-plus"></i>Join </a>
-              </form>
-        {{!--     <a href="/asistencias/add/{{this.clase_id}}" class="text-warning"></a> --}}
+            <form action="/asistencias/add/{{this.clase_id}}" method="post">
+              <a onclick="this.parentNode.submit();" class="text-warning"><i class="fa-solid fa-user-plus"></i>Join </a>
+            </form>
+            {{!-- <a href="/asistencias/add/{{this.clase_id}}" class="text-warning"></a> --}}
           </td>
         </tr>
 
@@ -50,31 +50,41 @@
 </div>
 <h3>pruebas</h3>
 <div>
-	<div class="container">
-		<div class="row">
-			{{#each clases}}
-			{{#if @first}} <!-- Añadir encabezados de días de la semana -->
-			<div class="col-12">
-				<h3>{{diaSemana this.fecha}}</h3>
-			</div>
-			{{else if (isNewDay ../clases @index this.fecha_hora)}}
-			<div class="col-12">
-				<h3>{{diaSemana this.fecha}}</h3>
-			</div>
-			{{/if}}
-			<div class="col-md-2 mb-1">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">{{this.nombre_actividad}}</h5>
-						<p class="card-text">
-              <div>{{this.nombre_actividad}}</div>
-						<div>{{this.hora}} {{this.duracion}}min </div>
-						<div>{{this.nombre_instructor}}</div>
-						</p>
-					</div>
-				</div>
-			</div>
-			{{/each}}
-		</div>
-	</div>
+  <div class="container">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miércoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+            <th>Sábado</th>
+            <th>Domingo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {{#each clases}}
+            <td>
+              {{#each this}}
+              <div class="card mb-2">
+                <div class="card-body">
+                  <h5 class="card-title">{{nombre_actividad}}</h5>
+                  <p class="card-text">{{formatearHoras fecha_hora}}
+                  <p> {{duracion}}min</p>
+                  </p>
+                </div>
+              </div>
+              {{else}}
+              <p>No hay clases</p>
+              {{/each}}
+            </td>
+            {{/each}}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

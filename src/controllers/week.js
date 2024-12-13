@@ -12,12 +12,20 @@ export class WeekController {
     static async getAll(req, res) {
         const usuarios = await UsuarioModel.getAll();
         const clases = await WeekModel.getAll();
-        // Ordenar por fecha y hora
-        const clasesOrdenadas = clases.sort((a, b) => {
-            return new Date(a.fecha_hora) - new Date(b.fecha_hora);
+        // Ordenar las clases por fecha
+        const clasesOrdenadas = clases.sort((a, b) => (a.dia) - (b.dia));
+        // Agrupar las clases por día de la semana (Lunes=1, ..., Domingo=7)
+        const clasesPorDia = [[], [], [], [], [], [], []]; // Array para los 7 días
+        clasesOrdenadas.forEach((clase) => {
+            clasesPorDia[clase.dia - 1].push(clase);
         });
+        console.log(clasesOrdenadas);
 
-        res.render("clases/week", { clases:clasesOrdenadas, usuarios });
+        // Opcional: Asegurar que cada día también esté ordenado (redundante si ya está ordenado antes del agrupamiento)
+        clasesPorDia.forEach((dia) => {
+            dia.sort((a, b) => new Date(b.hora) - new Date(a.hora)); // Orden ascendente por hora
+        });
+        res.render("clases/week", { clases: clasesPorDia, usuarios });
     }
 
     static async getById(req, res) {
