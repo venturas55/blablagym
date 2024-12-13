@@ -17,8 +17,11 @@ import { corsMiddleware } from './middlewares/cors.js';
 
 import { indexRouter } from './routes/index.js';
 import { actividadesRouter } from './routes/actividades.js';
-import { anunciosRouter } from './routes/anuncios.js';
+import { asistenciasRouter } from './routes/asistencias.js';
 import { solicitudesRouter } from './routes/solicitudes.js';
+import { usuariosRouter } from './routes/usuarios.js';
+import { clasesRouter } from './routes/clases.js';
+import { weekRouter } from './routes/week.js';
 import { apiRouter } from './routes/api.js';
 import { authRouter } from './routes/authentication.js';
 import { fotosRouter } from './routes/fotos.js';
@@ -75,8 +78,11 @@ app.use('/js', express.static(path.join(__dirname + '../node_modules/jquery/dist
 app.use(indexRouter);
 app.use(authRouter);
 app.use('/actividades', actividadesRouter);
-app.use('/anuncios', anunciosRouter);
+app.use('/asistencias', asistenciasRouter);
 app.use('/solicitudes', solicitudesRouter);
+app.use('/usuarios', usuariosRouter);
+app.use('/clases', clasesRouter);
+app.use('/week', weekRouter);
 app.use(apiRouter);
 app.use(fotosRouter);
 

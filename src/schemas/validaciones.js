@@ -1,7 +1,7 @@
 import z from 'zod';
 const ISO_DATETIME_REGEX = /\d{4}-[01]\d-[0-3]\d/;
 
-const actvidadSchema = z.object({
+const actividadSchema = z.object({
     nombre: z.string({
         invalid_type_error: 'Actividad tiene que ser un string',
         required_error: 'Actividad es requerido'
@@ -20,32 +20,69 @@ const anunciosSchema = z.object({
     //fecha_hora: z.coerce.string().datetime({ offset: true }),
 });
 
-const solicitudSchema = z.object({
+const claseSchema = z.object({
+/*     duracion: z.coerce.number().int().positive(),
+    fecha_hora: z.string().regex(ISO_DATETIME_REGEX, 'date must be a valid ISO date'), */
+});
+
+const asistenciaSchema = z.object({
    
+});
+
+const usuariosSchema = z.object({
+    nombre: z.string({
+        invalid_type_error: 'Actividad tiene que ser un string',
+        required_error: 'Actividad es requerido'
+    }),
+    apellidos: z.string({
+        invalid_type_error: 'Actividad tiene que ser un string',
+        required_error: 'Actividad es requerido'
+    }),
+    email: z
+    .string()
+    .min(1, { message: "This field has to be filled." })
+    .email("This is not a valid email.")    //.refine((e) => e === "abcd@fg.com", "This email is not in our database")
+    ,
+    fecha_nacimiento: z.string().regex(ISO_DATETIME_REGEX, 'date must be a valid ISO date'),
 });
 
 
 export function validateActividad(object) {
-    return actvidadSchema.safeParse(object);
+    return actividadSchema.safeParse(object);
 }
 
 export function validateAnuncio(object) {
     return anunciosSchema.safeParse(object);
 }
 
-export function validateSolicitud(object) {
-    return solicitudSchema.safeParse(object);
+export function validateAsistencia(object) {
+    return asistenciaSchema.safeParse(object);
+}
+
+export function validateUsuario(object) {
+    return usuariosSchema.safeParse(object);
+}
+
+export function validateClase(object) {
+    return claseSchema.safeParse(object);
 }
 
 export function validatePartialActividad(object) {
-    return actvidadSchema.partial().safeParse(object);
+    return actividadSchema.partial().safeParse(object);
 }
 
 export function validatePartialAnuncio(object) {
     return anunciosSchema.partial().safeParse(object);
 }
 
-export function validatePartialSolicitud(object) {
-    return solicitudSchema.partial().safeParse(object);
+export function validatePartialAsistencia(object) {
+    return asistenciaSchema.partial().safeParse(object);
 }
 
+export function validatePartialUsuario(object) {
+    return usuariosSchema.partial().safeParse(object);
+}
+
+export function validatePartialClase(object) {
+    return claseSchema.partial().safeParse(object);
+}

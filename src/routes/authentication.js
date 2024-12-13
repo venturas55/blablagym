@@ -23,6 +23,7 @@ authRouter.get('/signin',funciones.isNotAuthenticated,(req,res)=>{
 });
 
 authRouter.post('/signin',(req,res,next)=>{
+    console.log("voy auth");
     passport.authenticate('local.signin',{
        successRedirect: '/profile',
        failureRedirect: '/signin',

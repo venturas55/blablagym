@@ -5,20 +5,26 @@ import db from "../database.js"; //db hace referencia a la BBDD
 export const readJSON = (path) => require(path)
 
 
-export class ActividadModel {
+export class UsuarioModel {
   static async getAll() {
-    const actividades = await db.query('SELECT * from actividades');
-    return actividades;
+    const usuarios = await db.query('SELECT * from usuarios');
+    return usuarios;
   }
 
+  static async getAllInstructores() {
+    const instructores = await db.query('SELECT * from usuarios where instructor=true');
+    return instructores;
+  }
+
+
   static async getById({ id }) {
-    const actividad = await db.query("SELECT * FROM actividades where actividad_id=?", id);
-    return actividad;
+    const usuario = await db.query("SELECT * FROM usuarios where id=?", id);
+    return usuario;
   }
 
   static async create({ input }) {
     try {
-      const a = await db.query("INSERT INTO actividades set ?", [input]);
+      const a = await db.query("INSERT INTO usuarios set ?", [input]);
       return a;
     } catch (error) {
       console.error(error.code);
@@ -28,7 +34,7 @@ export class ActividadModel {
   }
   static async delete({ input }) {
     try {
-      await db.query("DELETE FROM actividades WHERE actividad_id=?", [input]);
+      await db.query("DELETE FROM usuarios WHERE id=?", [input]);
     } catch (error) {
       console.error(error.code);
       return error;
@@ -37,9 +43,9 @@ export class ActividadModel {
 
   static async update({ input }) {
     try {
-      await db.query("UPDATE actividades set ? WHERE actividad_id = ?", [input, input.actividad_id,]);
+      await db.query("UPDATE usuarios set ? WHERE id = ?", [input, input.id,]);
     } catch (error) {
-      console.error(error.code);
+      console.error(error.code + error.message);
       return error;
     }
   }

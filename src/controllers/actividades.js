@@ -10,12 +10,11 @@ export class ActividadController {
 
     static async getAll(req, res) {
         const { genre } = req.query
-        const actividades = await ActividadModel.getAll({ genre });
+        const actividades = await ActividadModel.getAll();
         res.render("actividades/list", { actividades });
 
     }
     static async getById(req, res) {
-        console.log("por aqui");
         const { id } = req.params;
         const [actividad] = await ActividadModel.getById({ id });
         console.log(actividad);

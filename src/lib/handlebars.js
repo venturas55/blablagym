@@ -34,7 +34,7 @@ helpers.formatearHoras = (timestamp) => {
 helpers.formatearEn = (timestamp) => {
   if (timestamp) {
     let mnth = ("0" + (timestamp.getMonth() + 1)).slice(-2);
-    letday = ("0" + timestamp.getDate()).slice(-2);
+    let day = ("0" + timestamp.getDate()).slice(-2);
     return [timestamp.getFullYear(), mnth, day].join("-");
   }
 }

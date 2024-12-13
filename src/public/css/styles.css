@@ -114,5 +114,52 @@ a *{
   transform: rotate(180deg);
 }
 
+.flag {
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+}
+
+
+#week{
+  width: 100%;
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(15%, 1fr));
+
+}
+
+.day{
+  place-self: center stretch;
+  width: 90%;
+  height: 60px;
+  background: #908d8d;
+  /* margin: 5px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  border-radius: 5%;
+  border:1px solid black;
+
+}
+
+.clase{
+  width: 90%;
+  height: 60px;
+  background: #f2e2e2;
+  margin: 5px 0px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+ /*  font-weight: bold; */
+  color: black;
+  border-radius: 5%;
+  border:1px solid black;
+
+}
 
 @media (min-width: 992px) {}
