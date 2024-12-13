@@ -32,10 +32,10 @@ export class WeekModel {
 
   static async cloneWeek({ input }) {
     try {
-        // Paso 1: Obtener la semana base (lunes a domingo)
+      // Paso 1: Obtener la semana base (lunes a domingo)
       const clasesSemana = await db.query('SELECT * FROM semana  ORDER BY dia,hora ASC');
- /*      console.log("clasesSemana");
-      console.log(clasesSemana); */
+      /*      console.log("clasesSemana");
+           console.log(clasesSemana); */
 
       if (clasesSemana.length === 0) {
         console.log('No hay clases en la semana base.');
@@ -46,7 +46,6 @@ export class WeekModel {
       const ahora = moment(); // Fecha actual
       const lunesSiguiente = ahora.clone().startOf('isoWeek').add(7, 'days'); // Lunes siguiente
       const fechaFin = lunesSiguiente.clone().add(3, 'months').endOf('month'); // Fin de los próximos dos meses
-
       const semanasFuturas = [];
       let semanaActual = lunesSiguiente.clone();
       while (semanaActual.isBefore(fechaFin)) {
@@ -54,13 +53,11 @@ export class WeekModel {
         semanaActual.add(1, 'week'); // Avanzar al lunes de la siguiente semana
       }
 
-      console.log("semanasFuturas");
-      console.log(semanasFuturas);
       // Paso 3: Insertar las clases para cada semana futura
       for (const semana of semanasFuturas) {
         // Crear las fechas y horas de las clases para cada semana futura
         const inserts = clasesSemana.map((clase) => {
-          const diaOffset = clase.dia; // Día de la semana (0=lunes, 1=martes, ..., 6=domingo)
+          const diaOffset = clase.dia-1; // Día de la semana (0=lunes, 1=martes, ..., 6=domingo)
           const fechaClase = semana.clone().add(diaOffset, 'days').set({
             hour: moment(clase.hora, 'HH:mm').hour(),
             minute: moment(clase.hora, 'HH:mm').minute(),
@@ -77,15 +74,20 @@ export class WeekModel {
         });
 
         // Insertar las clases clonadas en la tabla 'clases'
-        const values = inserts.map((insert) => [
+        var values = inserts.map((insert) => [
           insert.creador_id,
           insert.actividad_id,
           insert.instructor_id,
           insert.duracion,
           insert.fecha_hora,
         ]);
-        await db.query('DELETE FROM clases WHERE fecha_hora >= CURDATE() + INTERVAL (7 - WEEKDAY(CURDATE())) DAY  AND fecha_hora < CURDATE() + INTERVAL (7 - WEEKDAY(CURDATE())) DAY + INTERVAL 3 MONTH');
-        await db.query('INSERT INTO clases (creador_id, actividad_id, instructor_id, duracion, fecha_hora) VALUES ?', [values]);
+        // Ordenar values por el atributo fecha_hora
+        values.sort((a, b) => {
+          const fechaHoraA = new Date(a[4]); // Convertir fecha_hora a objeto Date
+          const fechaHoraB = new Date(b[4]); // Convertir fecha_hora a objeto Date
+          return fechaHoraA - fechaHoraB; // Comparar las fechas
+        });
+        db.query('INSERT INTO clases (creador_id, actividad_id, instructor_id, duracion, fecha_hora) VALUES ?', [values]);
       }
       console.log('Clases clonadas con éxito para los próximos 3 meses.');
     } catch (error) {
@@ -104,14 +106,7 @@ export class WeekModel {
     }
   }
 
-  static async delete3m({ input }) {
-    try {
-      await db.query('DELETE FROM clases WHERE fecha_hora >= CURDATE() + INTERVAL (7 - WEEKDAY(CURDATE())) DAY  AND fecha_hora < CURDATE() + INTERVAL (7 - WEEKDAY(CURDATE())) DAY + INTERVAL 3 MONTH');
-    } catch (error) {
-      console.error(error.code);
-      return error;
-    }
-  }
+
 
   static async update({ input }) {
     try {

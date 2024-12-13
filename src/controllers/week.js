@@ -1,4 +1,5 @@
 import { WeekModel } from '../models/weekMysql.js';
+import { ClaseModel } from '../models/claseMysql.js';
 import { UsuarioModel } from '../models/usuarioMysql.js';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -110,15 +111,16 @@ export class WeekController {
     }
 
     static async cloneWeek(req, res) {
+        //const del = await ClaseModel.delete3m({ input: "item" });
         const nuevaACt = await WeekModel.cloneWeek({ input: "item" });
-        req.flash("success", "Clase insertada correctamente");
+        req.flash("success", "Clases insertada correctamente");
         res.redirect("/clases/list"); //te redirige una vez insertado el item
     }
 
     static async delete(req, res) {
         const { id } = req.params
         console.log("deleteclases: " + JSON.stringify(id));
-        const result = await WeekModel.delete({ input: id })
+        const result = await ClaseModel.delete({ input: id })
         if (result === false) {
             return res.status(404).json({ message: 'clases not found' })
         }

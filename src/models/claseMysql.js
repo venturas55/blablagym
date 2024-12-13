@@ -60,4 +60,13 @@ export class ClaseModel {
       return error;
     }
   }
+  static async delete3m({ input }) {
+    try {
+      await db.query('DELETE FROM clases WHERE fecha_hora >= CURDATE() + INTERVAL (7 - WEEKDAY(CURDATE())) DAY  AND fecha_hora < CURDATE() + INTERVAL (7 - WEEKDAY(CURDATE())) DAY + INTERVAL 3 MONTH');
+    } catch (error) {
+      console.error(error.code);
+      return error;
+    }
+  }
+
 }
