@@ -1,4 +1,5 @@
 import { format } from 'timeago.js';
+import moment from 'moment';
 const helpers = {};
 
 helpers.timeago = (timestamp) => {
@@ -18,7 +19,7 @@ helpers.datetimelocal = (timestamp) => {
     let t = timestamp.toString().split(/[- :]/);
     let mnth = ("0" + (timestamp.getMonth() + 1)).slice(-2);
     let day = ("0" + timestamp.getDate()).slice(-2);
-    return [timestamp.getFullYear(), mnth,day, ].join("-") + "T"+ t[4] + ":" + t[5];
+    return [timestamp.getFullYear(), mnth, day,].join("-") + "T" + t[4] + ":" + t[5];
   }
 }
 
@@ -53,5 +54,17 @@ helpers.when = (operand_1, operator, operand_2, options) => {
   if (result) return options.fn(this);
   else return options.inverse(this);
 }
+
+helpers.diaSemana = (fecha_hora) => moment(fecha_hora).format('dddd');
+
+helpers.horaClase = (fecha_hora) => moment(fecha_hora).format('HH:mm');
+
+// Helper para verificar si es un día nuevo
+helpers.isNewDay = (clases, index, fechaActual) => {
+  if (index === 0) return true; // Siempre mostrar el primer día
+  const fechaPrev = clases[index - 1].fecha_hora;
+  return moment(fechaActual).format('YYYY-MM-DD') !== moment(fechaPrev).format('YYYY-MM-DD');
+};
+
 
 export default helpers;

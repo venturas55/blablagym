@@ -25,10 +25,6 @@ const claseSchema = z.object({
     fecha_hora: z.string().regex(ISO_DATETIME_REGEX, 'date must be a valid ISO date'), */
 });
 
-const asistenciaSchema = z.object({
-   
-});
-
 const usuariosSchema = z.object({
     nombre: z.string({
         invalid_type_error: 'Actividad tiene que ser un string',
@@ -44,6 +40,14 @@ const usuariosSchema = z.object({
     .email("This is not a valid email.")    //.refine((e) => e === "abcd@fg.com", "This email is not in our database")
     ,
     fecha_nacimiento: z.string().regex(ISO_DATETIME_REGEX, 'date must be a valid ISO date'),
+});
+
+const asistenciaSchema = z.object({
+   
+});
+
+const calendarioSchema = z.object({
+   
 });
 
 
@@ -67,6 +71,11 @@ export function validateClase(object) {
     return claseSchema.safeParse(object);
 }
 
+export function validateCalendario(object) {
+    return calendarioSchema.safeParse(object);
+}
+
+
 export function validatePartialActividad(object) {
     return actividadSchema.partial().safeParse(object);
 }
@@ -86,3 +95,8 @@ export function validatePartialUsuario(object) {
 export function validatePartialClase(object) {
     return claseSchema.partial().safeParse(object);
 }
+
+export function validatePartialCalendario(object) {
+    return calendarioSchema.partial().safeParse(object);
+}
+

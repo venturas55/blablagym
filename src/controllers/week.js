@@ -12,7 +12,12 @@ export class WeekController {
     static async getAll(req, res) {
         const usuarios = await UsuarioModel.getAll();
         const clases = await WeekModel.getAll();
-        res.render("clases/week", { clases,usuarios });
+        // Ordenar por fecha y hora
+        const clasesOrdenadas = clases.sort((a, b) => {
+            return new Date(a.fecha_hora) - new Date(b.fecha_hora);
+        });
+
+        res.render("clases/week", { clases:clasesOrdenadas, usuarios });
     }
 
     static async getById(req, res) {
@@ -124,11 +129,11 @@ export class WeekController {
     }
 
     static async update(req, res) {
-         const result = validatePartialClase(req.body)
- 
-         if (!result.success) {
-             return res.status(400).json({ error: JSON.parse(result.error.message) })
-         }
+        const result = validatePartialClase(req.body)
+
+        if (!result.success) {
+            return res.status(400).json({ error: JSON.parse(result.error.message) })
+        }
 
         const { id } = req.params;
         try {
@@ -139,8 +144,8 @@ export class WeekController {
                 duracion,
                 fecha_hora
             } = req.body;
-        
-            
+
+
             const newItem = {
                 clase_id: id,
                 creador_id,
@@ -157,7 +162,7 @@ export class WeekController {
             //req.flash("success", "Clase modificada correctamente");
             res.redirect("/clases/list");
         } catch (error) {
-            console.error(error.code + " "+ error.message);
+            console.error(error.code + " " + error.message);
             //req.flash("error", "Hubo algun error");
             res.redirect("/error");
         }
