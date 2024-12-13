@@ -1,6 +1,6 @@
-<div class="container pb-2 mb-5">
-	{{!-- <div class="row">
-		<div class="col-12 text-center"> --}}
+{{!-- <div class="container pb-2 mb-5">
+	<div class="row">
+		<div class="col-12 text-center">
 			<div id="week">
 				<div class="day">Lunes</div>
 				<div class="day">Martes</div>
@@ -17,19 +17,23 @@
 				</div>
 				{{/each}}
 
-				{{!--
+
 			</div>
-		</div> --}}
+		</div>
 	</div>
+</div> --}}
 
-
-
-</div>
 <div class="text-center">
-	<a href="/clases/addClassWeek"> <button class="btn btn-warning">NUEVA CLASEWEEK</button></a>
+	<a href="/week/add"> <button class="btn btn-warning">NUEVA CLASE WEEK</button></a>
 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 		UN MODAL
 	</button>
+
+	<form action="/week/clone" method="post">
+		<button class="btn btn-danger">CLONAR SEMANA</button>
+	</form>
+
+	<a href="/week/edit"> <button class="btn btn-warning">MODIFICACION SEMANA BASE</button></a>
 </div>
 
 <!-- Modal -->
@@ -53,11 +57,10 @@
 </div>
 
 
-<h3>pruebas</h3>
 <div>
-	<div class="container">
+	<div class="container pb-2 mb-5">
 		<div class="table-responsive">
-			<table class="table table-bordered">
+			<table class="table table-bordered table-dark">
 				<thead class="thead-light">
 					<tr>
 						<th>Lunes</th>
@@ -73,14 +76,17 @@
 					<tr>
 						{{#each clases}}
 						<td>
-							{{nombre_actividad}}
 							{{#each this}}
 							<div class="card mb-2">
 								<div class="card-body">
-									<h5 class="card-title">{{nombre_actividad}}</h5>
-									<p class="card-text">{{ hora}}
+									<h5 class="card-title"> {{nombre_actividad}}</h5>
+									<p class="card-text">{{fsh hora}}
 									<p> {{duracion}}min</p>
 									</p>
+									<a href="/week/editClass/{{clase_id}}" class="text-warning"><i
+											class="fa-solid fa-pen"></i>Edit</a>
+									<a href="/week/delete/{{clase_id}}" class="text-warning"><i
+											class="fa-solid fa-trash"></i>Del</a>
 								</div>
 							</div>
 							{{else}}

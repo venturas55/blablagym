@@ -19,20 +19,34 @@ export class WeekController {
         clasesOrdenadas.forEach((clase) => {
             clasesPorDia[clase.dia - 1].push(clase);
         });
-        console.log(clasesOrdenadas);
 
-        // Opcional: Asegurar que cada día también esté ordenado (redundante si ya está ordenado antes del agrupamiento)
-        clasesPorDia.forEach((dia) => {
-            dia.sort((a, b) => new Date(b.hora) - new Date(a.hora)); // Orden ascendente por hora
+        // Asegurar que cada día también esté ordenado (redundante si ya está ordenado antes del agrupamiento)
+        clasesPorDia.forEach((clasesDelDia) => {
+            clasesDelDia.sort((a, b) => {
+                // Convertir la hora a un formato comparable (como cadenas de tiempo)
+                const horaA = a.hora.split(':').map(Number); // [HH, MM, SS]
+                const horaB = b.hora.split(':').map(Number);
+                
+                // Comparar primero horas, luego minutos, luego segundos
+                if (horaA[0] !== horaB[0]) return horaA[0] - horaB[0]; // Comparar horas
+                if (horaA[1] !== horaB[1]) return horaA[1] - horaB[1]; // Comparar minutos
+                return horaA[2] - horaB[2]; // Comparar segundos (opcional si tu formato incluye segundos)
+            });
         });
-        res.render("clases/week", { clases: clasesPorDia, usuarios });
+        console.log(clasesPorDia);
+        res.render("week/list", { clases: clasesPorDia, usuarios });
+    }
+
+    static async getAll2modify(req, res) {
+        const clases = await WeekModel.getAll();
+        res.render("week/list2edit", { clases });
     }
 
     static async getById(req, res) {
         const { id } = req.params;
         const [clase] = await WeekModel.getById({ id });
         console.log(clase);
-        res.render("clases/plantilla", { clase });
+        res.render("week/plantilla", { clase });
     }
 
     static async createClass(req, res) {
@@ -96,32 +110,9 @@ export class WeekController {
     }
 
     static async cloneWeek(req, res) {
-        const result = validateClase(req.body);
-
-        if (!result.success) {
-            // 422 Unprocessable Entity
-            return res.status(400).json({ error: JSON.parse(result.error.message) });
-        }
-        const {
-            creador_id,
-            actividad_id,
-            instructor_id,
-            duracion,
-            fecha_hora
-        } = req.body;
-
-        const item = {
-            creador_id,
-            actividad_id,
-            instructor_id,
-            duracion,
-            fecha_hora,
-
-        };
-        const nuevaACt = await WeekModel.create({ input: item });
+        const nuevaACt = await WeekModel.cloneWeek({ input: "item" });
         req.flash("success", "Clase insertada correctamente");
         res.redirect("/clases/list"); //te redirige una vez insertado el item
-
     }
 
     static async delete(req, res) {
@@ -132,16 +123,16 @@ export class WeekController {
             return res.status(404).json({ message: 'clases not found' })
         }
 
-        //req.flash("success", "clases borrado correctamente");
-        res.redirect("/clases/list");
+        req.flash("success", "clase borrada correctamente");
+        res.redirect("/week/list");
     }
 
     static async update(req, res) {
-        const result = validatePartialClase(req.body)
+     /*    const result = validatePartialClase(req.body)
 
         if (!result.success) {
             return res.status(400).json({ error: JSON.parse(result.error.message) })
-        }
+        } */
 
         const { id } = req.params;
         try {
@@ -149,8 +140,9 @@ export class WeekController {
                 creador_id,
                 actividad_id,
                 instructor_id,
-                duracion,
-                fecha_hora
+                dia,
+                hora,
+                duracion
             } = req.body;
 
 
@@ -159,18 +151,19 @@ export class WeekController {
                 creador_id,
                 actividad_id,
                 instructor_id,
-                duracion,
-                fecha_hora
+                dia,
+                hora,
+                duracion
             };
             console.log(newItem);
             const result = await WeekModel.update({ input: newItem })
             if (result === false) {
                 return res.status(404).json({ message: 'Clase not found' })
             }
-            //req.flash("success", "Clase modificada correctamente");
-            res.redirect("/clases/list");
+            req.flash("success", "Clase modificada correctamente");
+            res.redirect("/week/list");
         } catch (error) {
-            console.error(error.code + " " + error.message);
+            console.error(error.code + " " + error);
             //req.flash("error", "Hubo algun error");
             res.redirect("/error");
         }

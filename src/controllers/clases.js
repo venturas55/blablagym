@@ -10,9 +10,9 @@ import { validateClase, validatePartialClase } from '../schemas/validaciones.js'
 export class ClaseController {
 
     static async getAll(req, res) {
-        const usuarios = await UsuarioModel.getAll();
+        //const usuarios = await UsuarioModel.getAll();
         const clases = await ClaseModel.getAll();
-        res.render("clases/list", { clases,usuarios });
+        res.render("clases/list", { clases });
     }
 
     static async getWeek(req, res) {

@@ -6,6 +6,15 @@ helpers.timeago = (timestamp) => {
   return format(timestamp);
 }
 
+//Este es el formateo necesario para encajar una fecha en un input de type="date"
+helpers.formatearEn = (timestamp) => {
+  if (timestamp) {
+    let mnth = ("0" + (timestamp.getMonth() + 1)).slice(-2);
+    let day = ("0" + timestamp.getDate()).slice(-2);
+    return [timestamp.getFullYear(), mnth, day].join("-");
+  }
+}
+
 helpers.formatearSp = (timestamp) => {
   if (timestamp) {
     let mnth = ("0" + (timestamp.getMonth() + 1)).slice(-2);
@@ -29,14 +38,11 @@ helpers.formatearHoras = (timestamp) => {
     var t = timestamp.toString().split(/[- :]/);
     return t[4] + ":" + t[5];
   }
-
 }
-//Este es el formateo necesario para encajar una fecha en un input de type="date"
-helpers.formatearEn = (timestamp) => {
-  if (timestamp) {
-    let mnth = ("0" + (timestamp.getMonth() + 1)).slice(-2);
-    let day = ("0" + timestamp.getDate()).slice(-2);
-    return [timestamp.getFullYear(), mnth, day].join("-");
+
+helpers.fsh = (string) => {
+  if (string) {
+    return string.slice(0, 5);
   }
 }
 
